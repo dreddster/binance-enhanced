@@ -34,6 +34,14 @@ The **complete** Binance skill for [Moltbot](https://github.com/moltbot/moltbot)
 | Swap | Manual steps | Auto-routing |
 | Safety | Executes immediately | Preview first |
 
+## 💎 Referral Included
+
+New to Binance? This skill includes a **referral code** for fee discounts:
+
+👉 [**Sign up with referral**](https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00UIF03H0N) | Code: `CPA_00UIF03H0N`
+
+*Using this skill supports future development!*
+
 ---
 
 ## 🚀 Quick Start
@@ -265,14 +273,6 @@ Get testnet keys: [testnet.binance.vision](https://testnet.binance.vision/)
 | `--all` | Sell entire balance |
 | `--limit <PRICE>` | Limit order price |
 | `--days <N>` | History period |
-
----
-
-## 💎 New to Binance?
-
-Get **fee discounts** with our referral:
-
-👉 [**Sign up here**](https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00UIF03H0N) | Code: `CPA_00UIF03H0N`
 
 ---
 
