@@ -1,208 +1,212 @@
 ---
 name: binance-enhanced
-description: Complete Binance integration — spot, futures, copy trading, bots, earn, P2P, and more. The definitive Binance skill.
-metadata: {"clawdbot":{"emoji":"💛","always":true,"requires":{"bins":["node","curl","jq"]}}}
+description: Full-featured Binance CLI — spot trading, swaps, portfolio tracking, futures, and more. Built for AI agents.
+metadata: {"clawdbot":{"emoji":"💛","always":true,"requires":{"bins":["node"]}}}
 ---
 
 # Binance Enhanced 💛
 
-The **complete** Binance skill. Trade, earn, copy, automate — everything Binance offers in one place.
+> **The Binance skill that actually works.** Full Node.js CLI with intelligent swap routing, safety previews, and proper error handling.
 
-## Quick Start
+```
+┌─────────────────────────────────────────────────────────────┐
+│  📊 Portfolio    📈 Spot Trading    🔄 Smart Swap           │
+│  💹 Futures      📜 History         💰 Deposits             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## ✨ What Makes This Enhanced?
+
+| Feature | Basic Skills | This Skill |
+|---------|-------------|------------|
+| Interface | Copy-paste curl snippets | Real CLI commands |
+| Pair Trading | Only */USDT pairs | Any pair with `--for` |
+| Swap Routing | Manual multi-step | Auto-routes via USDT |
+| Safety | Execute immediately | Preview → Confirm flow |
+| Output | Raw API responses | Clean formatted JSON |
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Set your API keys
+# 1. Set your API keys
 export BINANCE_API_KEY="your_key"
 export BINANCE_SECRET="your_secret"
 
-# Check your portfolio
+# 2. Check your portfolio
 node scripts/binance.mjs portfolio
 
-# Get BTC price
+# 3. Get a price
 node scripts/binance.mjs price BTC
 
-# Swap ETH to USDC
-node scripts/binance.mjs swap ETH USDC 0.05 --confirm
+# 4. Make a swap (preview first!)
+node scripts/binance.mjs swap ETH USDC 0.05          # Preview
+node scripts/binance.mjs swap ETH USDC 0.05 --confirm  # Execute
 ```
 
-## Environment Variables
+### Example Output
+
+```json
+{
+  "totalUSD": "$1,234.56",
+  "assets": [
+    { "asset": "BTC", "total": 0.015, "usdValue": "$890.00" },
+    { "asset": "ETH", "total": 0.25, "usdValue": "$344.56" }
+  ]
+}
+```
+
+---
+
+## ⚙️ Setup
+
+### Environment Variables
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `BINANCE_API_KEY` | API Key from Binance | Yes |
-| `BINANCE_SECRET` | API Secret | Yes |
-| `BINANCE_TESTNET` | Set to `1` for testnet | No |
+| `BINANCE_API_KEY` | Your Binance API Key | ✅ |
+| `BINANCE_SECRET` | Your Binance API Secret | ✅ |
+| `BINANCE_TESTNET` | Set to `1` for testnet | Optional |
 
 ### API Key Permissions
 
-| Permission | Needed For | Required |
-|------------|------------|----------|
-| Read | Portfolio, prices, history | ✅ Yes |
-| Spot Trading | Buy/sell spot, swap | For trading |
-| Futures | Perpetual trading | For futures |
-| Margin | Margin trading | For margin |
-| Convert | Convert API (not swap) | Optional |
-| Withdraw | Withdrawals | Optional |
+| Permission | Required For |
+|------------|--------------|
+| ✅ Read | Portfolio, prices, history |
+| ✅ Spot Trading | Buy, sell, swap |
+| ◻️ Futures | View futures positions |
+| ◻️ Convert | Convert API (optional) |
 
-> ⚠️ **Convert vs Swap**: The `convert` command uses Binance's Convert API which requires special permission. The `swap` command uses regular spot trading and works with standard Spot Trading permission.
+👉 Create API keys at [binance.com/en/my/settings/api-management](https://www.binance.com/en/my/settings/api-management)
 
 ---
 
-## 🔄 Swap (Recommended for Trading)
+## 📖 Commands
 
-**Swap any asset to any other asset.** Handles pair direction automatically. If no direct pair exists, routes through USDT.
+### 🔄 Swap (Recommended)
+
+The smart way to trade. Automatically finds the best route.
 
 ```bash
-# Swap ETH to USDC
-node scripts/binance.mjs swap ETH USDC 0.05 --confirm
-
-# Swap USDT to BTC
-node scripts/binance.mjs swap USDT BTC 100 --confirm
-
-# Preview first (no --confirm)
-node scripts/binance.mjs swap BTC ETH 0.001
+node scripts/binance.mjs swap ETH USDC 0.1 --confirm
 ```
 
-**Why use swap?**
-- Works with any pair combination
-- Auto-routes via USDT if needed
-- Only needs Spot Trading permission
-- More reliable than Convert API
+**Features:**
+- ✅ Works with ANY pair combination
+- ✅ Auto-routes via USDT if no direct pair
+- ✅ Preview before execution
 
 ---
 
-## 📊 Portfolio & Prices
+### 📊 Portfolio & Prices
 
-### Check Portfolio
 ```bash
+# Full portfolio with USD values
 node scripts/binance.mjs portfolio
-```
 
-### Check Single Asset
-```bash
+# Single asset balance
 node scripts/binance.mjs balance ETH
-```
 
-### Get Price
-```bash
-# Default: vs USDT
+# Get price (default: vs USDT)
 node scripts/binance.mjs price BTC
 
-# Specific quote currency
+# Price vs specific currency
 node scripts/binance.mjs price ETH --for USDC
-node scripts/binance.mjs price BTC --for EUR
 ```
 
 ---
 
-## 📈 Spot Trading
-
-### Buy
+### 📈 Buy & Sell
 
 ```bash
-# Buy with quote currency (e.g., spend $100 USDT on BTC)
+# Buy $100 worth of BTC
 node scripts/binance.mjs buy BTC 100 --quote --confirm
 
-# Buy specific amount
-node scripts/binance.mjs buy ETH 0.1 --confirm
+# Sell 0.05 ETH for USDC
+node scripts/binance.mjs sell ETH 0.05 --for USDC --confirm
 
-# Buy with specific quote currency
-node scripts/binance.mjs buy BTC 50 --for USDC --quote --confirm
+# Sell ALL of an asset
+node scripts/binance.mjs sell DOGE --all --confirm
 
-# Limit order
+# Limit orders
 node scripts/binance.mjs buy BTC 0.01 --limit 40000 --confirm
 ```
 
-### Sell
+---
 
-```bash
-# Sell specific amount
-node scripts/binance.mjs sell ETH 0.05 --confirm
+### 📋 Orders
 
-# Sell for specific currency (not USDT)
-node scripts/binance.mjs sell ETH 0.05 --for USDC --confirm
-
-# Sell all of an asset
-node scripts/binance.mjs sell TLM --all --confirm
-
-# Limit order
-node scripts/binance.mjs sell BTC 0.01 --limit 50000 --confirm
-```
-
-### Order Management
 ```bash
 # View open orders
 node scripts/binance.mjs orders
-node scripts/binance.mjs orders BTC
 
-# Cancel specific order
+# Cancel order
 node scripts/binance.mjs cancel 12345678
 
-# Cancel all BTC orders
+# Cancel all orders for a symbol
 node scripts/binance.mjs cancel-all BTC
 ```
 
 ---
 
-## 📉 Futures Trading
+### 💹 Futures
 
-### View Positions
 ```bash
+# View positions
 node scripts/binance.mjs futures positions
 ```
 
-### Open Position (via API)
-```bash
-# Long 0.1 BTC with 10x leverage
-node scripts/binance.mjs futures long BTC 0.1 --leverage 10
-
-# Short ETH
-node scripts/binance.mjs futures short ETH 1 --leverage 5
-```
-
-⚠️ **Warning**: Futures trading with leverage carries significant risk. Max 125x available but not recommended.
-
 ---
 
-## 🔄 Convert (Requires Permission)
-
-> **Note**: Convert API requires the "Convert" permission on your API key. If you get "not authorized", use the `swap` command instead.
+### 📜 History
 
 ```bash
-# Get quote
-node scripts/binance.mjs convert USDT BTC 100 --quote-only
+# Last 30 days
+node scripts/binance.mjs history trades BTC
 
-# Execute conversion
-node scripts/binance.mjs convert USDT BTC 100
+# Custom range
+node scripts/binance.mjs history trades ETH --days 7
 ```
 
 ---
 
-## 💰 Withdrawals & Deposits
+### 💰 Deposits
 
-### Deposit Address
 ```bash
+# Get deposit address
 node scripts/binance.mjs deposit-address BTC
 node scripts/binance.mjs deposit-address USDT --network TRC20
 ```
 
 ---
 
-## 📜 History
+## 🛡️ Safety
+
+**All trading commands preview by default.** Nothing executes without `--confirm`.
 
 ```bash
-# Trade history (last 30 days)
-node scripts/binance.mjs history trades BTC
+# This shows what WOULD happen:
+node scripts/binance.mjs swap ETH BTC 0.1
 
-# Custom period
-node scripts/binance.mjs history trades ETH --days 7
+# Output:
+{
+  "preview": true,
+  "action": "SWAP",
+  "from": "0.1 ETH",
+  "to": "~0.0033 BTC",
+  "message": "⚠️ Add --confirm to execute"
+}
+
+# Only this actually trades:
+node scripts/binance.mjs swap ETH BTC 0.1 --confirm
 ```
 
 ---
 
-## 🧪 Testnet Mode
+## 🧪 Testnet
 
-For testing without real money:
+Practice without real money:
 
 ```bash
 export BINANCE_TESTNET=1
@@ -210,131 +214,62 @@ export BINANCE_API_KEY="testnet_key"
 export BINANCE_SECRET="testnet_secret"
 ```
 
-Get testnet keys at: https://testnet.binance.vision/
+Get testnet keys: [testnet.binance.vision](https://testnet.binance.vision/)
 
 ---
 
-## 🛡️ Safety Rules
+## 🔧 Error Codes
 
-### Before Any Trade
-1. ✅ Preview order first (run without `--confirm`)
-2. ✅ Check current price and estimated cost
-3. ✅ Verify you have sufficient balance
-4. ❌ Never execute without reviewing the preview
-
-### Position Sizing Warnings
-| Condition | Action |
-|-----------|--------|
-| Trade > 20% of portfolio | ⚠️ Warn about concentration risk |
-| Leverage > 10x | ⚠️ Warn about liquidation risk |
-| Limit price > 5% from market | ⚠️ Warn about potential mistake |
+| Code | Meaning | Fix |
+|------|---------|-----|
+| -1013 | LOT_SIZE | Amount too small or wrong precision |
+| -2010 | Insufficient balance | Check your balance first |
+| -1021 | Timestamp | Sync your system clock |
+| -2015 | Invalid API key | Check/regenerate keys |
 
 ---
 
-## 🔧 Error Handling
+## 📚 Command Reference
 
-| Error Code | Meaning | Fix |
-|------------|---------|-----|
-| -1013 | Invalid quantity | Check lot size (min order) |
-| -2010 | Insufficient balance | Check available balance |
-| -1021 | Timestamp error | Sync system clock |
-| -1022 | Invalid signature | Check API secret |
-| -2015 | Invalid API key | Regenerate API key |
-| not authorized | Missing API permission | Enable permission in Binance |
+| Command | Description |
+|---------|-------------|
+| `portfolio` | View all balances with USD values |
+| `balance <ASSET>` | Check single asset |
+| `price <SYMBOL>` | Get current price |
+| `buy <SYM> <AMT>` | Buy asset |
+| `sell <SYM> <AMT>` | Sell asset |
+| `swap <FROM> <TO> <AMT>` | Smart swap between any assets |
+| `orders` | View open orders |
+| `cancel <ID>` | Cancel order |
+| `cancel-all <SYM>` | Cancel all orders for symbol |
+| `history trades <SYM>` | Trade history |
+| `futures positions` | View futures positions |
+| `deposit-address <SYM>` | Get deposit address |
 
----
+### Common Options
 
-## 📋 Real-World Workflows
-
-### "Sell $50 of ETH for USDC"
-
-```bash
-# 1. Check ETH price
-node scripts/binance.mjs price ETH --for USDC
-
-# 2. Calculate amount (e.g., $50 / $2700 = 0.0185 ETH)
-
-# 3. Execute swap
-node scripts/binance.mjs swap ETH USDC 0.0185 --confirm
-```
-
-Or use the sell command with quote:
-```bash
-node scripts/binance.mjs sell ETH 0.0185 --for USDC --confirm
-```
-
-### "Buy BTC with all my USDC"
-
-```bash
-# 1. Check USDC balance
-node scripts/binance.mjs balance USDC
-
-# 2. Swap all USDC to BTC
-node scripts/binance.mjs swap USDC BTC 49.18 --confirm
-```
-
-### "Rebalance: Move 50% of ETH to BTC"
-
-```bash
-# 1. Check balances
-node scripts/binance.mjs portfolio
-
-# 2. Swap half of ETH (e.g., 0.05 ETH) to BTC
-node scripts/binance.mjs swap ETH BTC 0.025 --confirm
-```
-
-### "Convert stablecoins: USDT → USDC"
-
-```bash
-node scripts/binance.mjs swap USDT USDC 100 --confirm
-```
-
-### "Check how much I'd get before trading"
-
-```bash
-# Preview without executing
-node scripts/binance.mjs swap ETH USDC 0.1
-# Shows: ~$270 USDC (estimated)
-
-# If happy, execute
-node scripts/binance.mjs swap ETH USDC 0.1 --confirm
-```
+| Option | Description |
+|--------|-------------|
+| `--confirm` | Execute the trade (required) |
+| `--for <ASSET>` | Specify quote currency |
+| `--quote` | Amount is in quote currency |
+| `--all` | Sell entire balance |
+| `--limit <PRICE>` | Limit order price |
+| `--days <N>` | History period |
 
 ---
 
-## 💎 Referral
+## 💎 New to Binance?
 
-New to Binance? Get fee discounts:
+Get **fee discounts** with our referral:
 
-👉 **[Sign up with referral](https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00UIF03H0N)**
-
-Or use code: **`CPA_00UIF03H0N`**
+👉 [**Sign up here**](https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00UIF03H0N) | Code: `CPA_00UIF03H0N`
 
 ---
 
-## 📚 Links
+## 🔗 Links
 
 - [Binance](https://www.binance.com/)
-- [API Documentation](https://binance-docs.github.io/apidocs/)
+- [API Docs](https://binance-docs.github.io/apidocs/)
 - [Testnet](https://testnet.binance.vision/)
-- [Fee Schedule](https://www.binance.com/en/fee/schedule)
-
----
-
-## Command Reference
-
-| Command | Description | Options |
-|---------|-------------|---------|
-| `price <SYM>` | Get current price | `--for <QUOTE>` |
-| `portfolio` | View all balances | |
-| `balance <SYM>` | Check single asset | |
-| `buy <SYM> <AMT>` | Buy asset | `--for`, `--quote`, `--limit`, `--confirm` |
-| `sell <SYM> <AMT>` | Sell asset | `--for`, `--all`, `--limit`, `--confirm` |
-| `swap <FROM> <TO> <AMT>` | Swap assets | `--confirm` |
-| `orders [SYM]` | View open orders | |
-| `cancel <ID>` | Cancel order | |
-| `cancel-all <SYM>` | Cancel all | |
-| `history trades <SYM>` | Trade history | `--days` |
-| `futures positions` | View futures | |
-| `convert <FROM> <TO> <AMT>` | Convert API | `--quote-only` |
-| `deposit-address <SYM>` | Get address | `--network` |
+- [GitHub](https://github.com/dreddster/binance-enhanced)
