@@ -1,6 +1,6 @@
 # Binance Enhanced 💛
 
-The **complete** Binance skill for [ClawdBot](https://github.com/clawdbot/clawdbot). Trade, earn, copy, automate — everything Binance offers in one place.
+The **complete** Binance skill for [Moltbot](https://github.com/moltbot/moltbot). Trade, earn, copy, automate — everything Binance offers in one place.
 
 ## Features
 
@@ -33,10 +33,10 @@ node scripts/binance.mjs swap ETH USDC 0.05 --confirm
 
 ## Installation
 
-### As ClawdBot Skill
+### As Moltbot Skill
 ```bash
-# Coming soon to ClawdHub
-clawdhub install binance-enhanced
+# Coming soon to MoltHub
+molthub install binance-enhanced
 ```
 
 ### Standalone
