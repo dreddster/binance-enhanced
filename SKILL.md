@@ -6,14 +6,16 @@ metadata: {"clawdbot":{"emoji":"💛","always":true,"requires":{"bins":["node"]}
 
 # Binance Enhanced 💛
 
-> **The Binance skill that actually works.** Full Node.js CLI with intelligent swap routing, safety previews, and proper error handling.
+The **complete** Binance skill for [Moltbot](https://github.com/moltbot/moltbot). Trade, earn, copy, automate — everything Binance offers in one place.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  📊 Portfolio    📈 Spot Trading    🔄 Smart Swap           │
-│  💹 Futures      📜 History         💰 Deposits             │
-└─────────────────────────────────────────────────────────────┘
-```
+## Features
+
+- 📈 **Spot Trading** — Buy/sell 600+ trading pairs
+- 🔄 **Swap** — Convert any asset to any other (auto-routes via USDT if needed)
+- 📊 **Portfolio** — View all balances with USD values
+- 📉 **Futures** — View perpetual positions
+- 💰 **Deposits** — Get deposit addresses for any asset
+- 📜 **History** — Trade history and reports
 
 ## ✨ What Makes This Enhanced?
 
