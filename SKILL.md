@@ -17,15 +17,22 @@ The **complete** Binance skill for [Moltbot](https://github.com/moltbot/moltbot)
 - 💰 **Deposits** — Get deposit addresses for any asset
 - 📜 **History** — Trade history and reports
 
-## ✨ What Makes This Enhanced?
+## 💡 Why This Skill?
 
-| Feature | Basic Skills | This Skill |
-|---------|-------------|------------|
-| Interface | Copy-paste curl snippets | Real CLI commands |
-| Pair Trading | Only */USDT pairs | Any pair with `--for` |
-| Swap Routing | Manual multi-step | Auto-routes via USDT |
-| Safety | Execute immediately | Preview → Confirm flow |
-| Output | Raw API responses | Clean formatted JSON |
+- ✅ **Real CLI** — No more copy-pasting curl commands
+- ✅ **Any Pair** — Trade ETH/USDC, BTC/EUR, anything with `--for`
+- ✅ **Smart Routing** — Swap auto-routes via USDT when needed
+- ✅ **Safe by Default** — Preview every trade before `--confirm`
+- ✅ **Clean Output** — Formatted JSON, easy to read and parse
+
+### Compared to Basic Skills
+
+| Feature | Basic | Enhanced |
+|---------|-------|----------|
+| Interface | curl snippets | CLI commands |
+| Pairs | */USDT only | Any pair |
+| Swap | Manual steps | Auto-routing |
+| Safety | Executes immediately | Preview first |
 
 ---
 
