@@ -1,0 +1,18 @@
+{
+  "name": "binance-enhanced",
+  "version": "1.0.0",
+  "description": "Complete Binance integration — spot, futures, copy trading, bots, earn, P2P, and more",
+  "type": "module",
+  "scripts": {
+    "binance": "node scripts/binance.mjs"
+  },
+  "keywords": [
+    "binance",
+    "crypto",
+    "trading",
+    "clawdbot",
+    "skill"
+  ],
+  "author": "Milian",
+  "license": "MIT"
+}
